@@ -14,12 +14,12 @@ In the trade modeled, Party A authorizes `Scythe` as the spender of its ERC20 to
 Party B authorizes `Scythe` as the spender of its ERC20 tokens and challenges the trade by sending the `dealId`. If it matches `counterparty` for the `dealId`, `Scythe` performs an atomic swap.
 
 Traditionally, because of lower gas prices, Solidity developers used to store setups for such trades
-in arrays of structs. While understandably convenient, this isn't acceptable currently on L1.
+in arrays of structs. While understandably convenient, this isn't currently acceptable on L1.
 
 `Scythe` instead packs all the parameters of a trade into a single `uint256`, thus reducing storage
-costs. It does so by maintaining mappings from addresses to numeric handles, so only when the contract `Scythe` sees an address for either a party or a contract for the first time, it costs excess gas to map them.
+costs. It does so by maintaining mappings from addresses to numeric handles, so only when `Scythe` sees an address for either a party or a contract for the first time, it costs excess gas to map them.
 
-After this, if the addresses are already known, we're just reading the handles from storage and storing them in that single uint256.
+After this, if the addresses are already known, we're just reading the handles from storage and storing them in that single `uint256`.
 
 In testing, the initial transaction cost 255k gas to the initiator, and then 87k gas to challenge.
 
